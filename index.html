@@ -35,7 +35,7 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
     .nav-brand { display: flex; align-items: center; gap: 0.75rem; }
-    .nav-brand img { width: 76px; height: 76px; object-fit: contain; }
+    .nav-brand img { width: 48px; height: 48px; object-fit: contain; }
     .nav-brand span {
       color: var(--navy); font-size: 1.2rem; font-weight: 700;
       letter-spacing: 0.02em;
@@ -622,9 +622,11 @@
   </div>
 </div>
 <style>
-  .inst-logo-wrap { opacity: 0.85; transition: opacity 0.2s; }
+  .inst-logo-wrap { opacity: 0.85; transition: opacity 0.2s; background: transparent; }
   .inst-logo-wrap:hover { opacity: 1; }
-  .imss-logos { flex-wrap: wrap; gap: 1rem; }
+  .inst-logo-wrap img { max-height: 36px; max-width: 100px; width: auto; height: auto; object-fit: contain; background: transparent; mix-blend-mode: lighten; }
+  .inst-logo-wrap svg { max-height: 36px; max-width: 100px; }
+  .imss-logos { flex-wrap: wrap; gap: 1.5rem; justify-content: center; align-items: center; }
 </style>
 
 <!-- ── CTA FOOTER ── -->
