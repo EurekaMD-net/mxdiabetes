@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MxDiabetes — Pilar 3: Patrocinador</title>
+  <style>
+    :root { --navy:#0D2B4E; --teal:#0E8A8A; --teal-light:#1BBFBF; --white:#FFFFFF; --gray-50:#F8FAFB; --gray-100:#EEF2F5; --gray-600:#4A5568; --gray-800:#1A202C; --accent:#E53E3E; --font:'Segoe UI',system-ui,sans-serif; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font);color:var(--gray-800);background:var(--white)}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+    .nav-brand{display:flex;align-items:center;gap:.75rem}
+    .nav-brand img{width:38px;height:38px;object-fit:contain}
+    .nav-brand span{color:var(--navy);font-size:1.2rem;font-weight:700}
+    .nav-brand span em{color:var(--teal);font-style:normal}
+    .nav-back{color:var(--navy);text-decoration:none;font-size:.875rem;font-weight:600}
+    .nav-back:hover{color:var(--teal)}
+    .hero-pilar{margin-top:64px;background:linear-gradient(135deg,var(--navy) 0%,#0a3d62 100%);padding:5rem 5vw;text-align:center}
+    .pilar-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(14,138,138,.25);border:1px solid var(--teal);color:var(--teal-light);padding:.35rem .9rem;border-radius:999px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1.5rem}
+    h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#fff;line-height:1.15;margin-bottom:1rem}
+    h1 span{color:var(--teal-light)}
+    .hero-sub{color:rgba(255,255,255,.8);font-size:1.1rem;line-height:1.7;max-width:650px;margin:0 auto 2.5rem}
+    .metrics-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;max-width:900px;margin:3rem auto 0;padding:0 5vw}
+    .metric-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:1.75rem;text-align:center;backdrop-filter:blur(4px)}
+    .metric-num{font-size:2.2rem;font-weight:800;color:var(--teal-light)}
+    .metric-label{color:rgba(255,255,255,.7);font-size:.85rem;margin-top:.3rem;line-height:1.4}
+    .prop-section{padding:5rem 5vw;background:var(--gray-50)}
+    .prop-inner{max-width:1100px;margin:0 auto}
+    .section-label{text-transform:uppercase;letter-spacing:.1em;font-size:.78rem;font-weight:700;color:var(--teal);margin-bottom:.75rem}
+    .section-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:var(--navy);line-height:1.2;margin-bottom:1rem}
+    .prop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:3rem}
+    .prop-card{background:#fff;border-radius:16px;padding:2rem;border:1px solid var(--gray-100);box-shadow:0 2px 12px rgba(13,43,78,.06);position:relative}
+    .prop-card.featured{border:2px solid var(--teal);box-shadow:0 8px 30px rgba(14,138,138,.15)}
+    .prop-tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--teal);color:#fff;font-size:.72rem;font-weight:700;padding:.25rem .75rem;border-radius:999px;white-space:nowrap}
+    .prop-name{font-size:1.25rem;font-weight:800;color:var(--navy);margin-bottom:.5rem}
+    .prop-desc{color:var(--gray-600);font-size:.9rem;line-height:1.6;margin-bottom:1.25rem}
+    .prop-features{list-style:none}
+    .prop-features li{color:var(--gray-600);font-size:.875rem;padding:.3rem 0;padding-left:1.2rem;position:relative}
+    .prop-features li::before{content:'✓';position:absolute;left:0;color:var(--teal);font-weight:700}
+    .exclusivity-banner{background:linear-gradient(135deg,var(--navy),#0a3d62);border-radius:16px;padding:2.5rem;margin-top:3rem;text-align:center}
+    .exclusivity-banner h3{color:var(--teal-light);font-size:1.3rem;font-weight:800;margin-bottom:.75rem}
+    .exclusivity-banner p{color:rgba(255,255,255,.8);font-size:.95rem;line-height:1.6;max-width:600px;margin:0 auto}
+    .roi-section{padding:5rem 5vw;background:#fff}
+    .roi-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .roi-stat-list{list-style:none;margin-top:1.5rem}
+    .roi-stat-list li{display:flex;align-items:flex-start;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--gray-100)}
+    .roi-stat-num{font-size:1.6rem;font-weight:800;color:var(--teal);min-width:80px;line-height:1}
+    .roi-stat-label{color:var(--gray-600);font-size:.9rem;line-height:1.5}
+    .roi-chart{background:var(--navy);border-radius:16px;padding:1.75rem}
+    .roi-chart-title{color:var(--teal-light);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.25rem}
+    .roi-bar-row{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem}
+    .roi-bar-label{color:rgba(255,255,255,.7);font-size:.8rem;width:100px;flex-shrink:0}
+    .roi-bar-track{flex:1;height:24px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+    .roi-bar-fill{height:100%;border-radius:4px;background:var(--teal);display:flex;align-items:center;padding-left:.5rem}
+    .roi-bar-val{color:#fff;font-size:.72rem;font-weight:700}
+    .cta-section{text-align:center;padding:5rem 5vw;background:var(--teal)}
+    .cta-section h2{color:#fff;font-size:1.8rem;font-weight:800;margin-bottom:.75rem}
+    .cta-section p{color:rgba(255,255,255,.85);margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto}
+    .btn-white{background:#fff;color:var(--teal);padding:.9rem 2.5rem;border-radius:8px;font-weight:700;text-decoration:none;display:inline-block}
+    footer{background:var(--gray-800);padding:1.5rem 5vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    footer span{color:rgba(255,255,255,.4);font-size:.8rem}
+    footer a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.8rem}
+    @media(max-width:768px){.roi-inner{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <img src="assets/logo.png" alt="MxDiabetes">
+    <span>Mx<em>Diabetes</em></span>
+  </div>
+  <a href="index.html" class="nav-back">← Volver al inicio</a>
+</nav>
+
+<div class="hero-pilar">
+  <div style="max-width:900px;margin:0 auto">
+    <div class="pilar-badge">🔬 Pilar 3 — Patrocinador</div>
+    <h1>El canal que le faltaba<br>a su <span>estrategia de adherencia</span>.</h1>
+    <p class="hero-sub">MxDiabetes es el primer hub digital nacional de diabetes en México — con audiencia verificada, exclusividad de categoría terapéutica y métricas de impacto real en adherencia farmacológica.</p>
+  </div>
+  <div class="metrics-row">
+    <div class="metric-card">
+      <div class="metric-num">~10M</div>
+      <div class="metric-label">pacientes diagnosticados · audiencia potencial</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">67%</div>
+      <div class="metric-label">sin control glucémico — oportunidad de adherencia</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">1 de 1</div>
+      <div class="metric-label">patrocinador ancla por categoría terapéutica</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">24/7</div>
+      <div class="metric-label">presencia en agente de voz con millones de interacciones</div>
+    </div>
+  </div>
+</div>
+
+<div class="prop-section">
+  <div class="prop-inner">
+    <div class="section-label">Modelo de patrocinio</div>
+    <h2 class="section-title">Exclusividad de categoría. Sin ruido competitivo.</h2>
+    <p style="color:var(--gray-600);font-size:1.05rem;line-height:1.7;max-width:650px">Solo un laboratorio por categoría terapéutica. Su marca acompaña al paciente en cada interacción — desde el recordatorio de dosis hasta la consulta con el agente de voz.</p>
+    <div class="prop-grid">
+      <div class="prop-card">
+        <div class="prop-name">Educación Co-Branded</div>
+        <div class="prop-desc">Módulos educativos sobre su molécula integrados al programa del paciente, validados clínicamente, entregados en el momento de máxima receptividad.</div>
+        <ul class="prop-features">
+          <li>Contenido validado por especialistas</li>
+          <li>Entregado en el contexto de la dosis</li>
+          <li>Métricas de consumo y comprensión</li>
+          <li>Branding discreto e institucional</li>
+        </ul>
+      </div>
+      <div class="prop-card featured">
+        <div class="prop-tag">Paquete Ancla</div>
+        <div class="prop-name">Patrocinador Principal</div>
+        <div class="prop-desc">Exclusividad total en la plataforma durante 12 meses. Su marca presente en el agente de voz, los recordatorios, el módulo educativo y los reportes al médico.</div>
+        <ul class="prop-features">
+          <li>Exclusividad de categoría 12 meses</li>
+          <li>Presencia en agente de voz PipeSong</li>
+          <li>Módulo educativo co-branded completo</li>
+          <li>Dashboard de adherencia en tiempo real</li>
+          <li>Datos epidemiológicos de la plataforma</li>
+          <li>Co-presentación a IMSS y H. Ángeles</li>
+        </ul>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name">Datos &amp; Insights</div>
+        <div class="prop-desc">Acceso a los datos agregados y anonimizados de la plataforma — patrones de adherencia, lecturas de glucosa, y segmentación epidemiológica por región.</div>
+        <ul class="prop-features">
+          <li>Dashboard mensual de adherencia</li>
+          <li>Segmentación por región/edad/esquema</li>
+          <li>Benchmarking vs otras categorías</li>
+          <li>NOM-024 compliant · datos anonimizados</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exclusivity-banner">
+      <h3>⚡ Solo 5 patrocinadores ancla disponibles al lanzamiento</h3>
+      <p>Uno por categoría terapéutica: GLP-1, SGLT2, DPP-4, Insulinas, Orales. Los primeros 5 laboratorios en confirmar tienen derecho de primera negociación y precio de lanzamiento.</p>
+    </div>
+  </div>
+</div>
+
+<div class="roi-section">
+  <div class="roi-inner">
+    <div>
+      <div class="section-label">El argumento de negocio</div>
+      <h2 class="section-title">Impacto medible en adherencia — no solo impresiones.</h2>
+      <p style="color:var(--gray-600);font-size:1rem;line-height:1.7;margin-bottom:1rem">A diferencia del marketing tradicional de salud, MxDiabetes mide el impacto real: si su molécula mejora la adherencia de los pacientes en la plataforma, usted lo ve en el dashboard.</p>
+      <ul class="roi-stat-list">
+        <li><div class="roi-stat-num">+23%</div><div class="roi-stat-label">mejora típica en adherencia con recordatorio digital personalizado (referencia industria)</div></li>
+        <li><div class="roi-stat-num">67%</div><div class="roi-stat-label">de diabéticos diagnosticados en México sin control glucémico — mercado de mejora activo</div></li>
+        <li><div class="roi-stat-num">17.3M</div><div class="roi-stat-label">adultos en prediabetes — audiencia de prevención para GLP-1 y SGLT2</div></li>
+      </ul>
+    </div>
+    <div class="roi-chart">
+      <div class="roi-chart-title">Adherencia por canal (referencia)</div>
+      <div class="roi-bar-row">
+        <div class="roi-bar-label">MxDiabetes</div>
+        <div class="roi-bar-track"><div class="roi-bar-fill" style="width:87%"><span class="roi-bar-val">87%</span></div></div>
+      </div>
+      <div class="roi-bar-row">
+        <div class="roi-bar-label">App standalone</div>
+        <div class="roi-bar-track"><div class="roi-bar-fill" style="width:62%;background:rgba(14,138,138,.5)"><span class="roi-bar-val">62%</span></div></div>
+      </div>
+      <div class="roi-bar-row">
+        <div class="roi-bar-label">SMS recordatorio</div>
+        <div class="roi-bar-track"><div class="roi-bar-fill" style="width:44%;background:rgba(14,138,138,.35)"><span class="roi-bar-val">44%</span></div></div>
+      </div>
+      <div class="roi-bar-row">
+        <div class="roi-bar-label">Sin apoyo digital</div>
+        <div class="roi-bar-track"><div class="roi-bar-fill" style="width:33%;background:rgba(14,138,138,.2)"><span class="roi-bar-val">33%</span></div></div>
+      </div>
+      <div style="color:rgba(255,255,255,.3);font-size:.68rem;margin-top:1rem">* Datos proyectados basados en benchmarks de industria. Resultados reales post-piloto.</div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-section">
+  <h2>Reserve su categoría terapéutica</h2>
+  <p>Agende una llamada con el equipo de MxDiabetes para conocer la propuesta comercial completa y disponibilidad de categoría.</p>
+  <a href="mailto:laboratorios@mxdiabetes.info" class="btn-white">Solicitar propuesta comercial</a>
+</div>
+
+<footer>
+  <span>MxDiabetes · mxdiabetes.info · Una iniciativa de EurekaMD · 2026</span>
+  <a href="index.html">← Volver al inicio</a>
+</footer>
+
+</body>
+</html>

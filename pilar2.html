@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MxDiabetes — Pilar 2: Médico</title>
+  <style>
+    :root { --navy:#0D2B4E; --teal:#0E8A8A; --teal-light:#1BBFBF; --white:#FFFFFF; --gray-50:#F8FAFB; --gray-100:#EEF2F5; --gray-600:#4A5568; --gray-800:#1A202C; --accent:#E53E3E; --font:'Segoe UI',system-ui,sans-serif; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font);color:var(--gray-800);background:var(--white)}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+    .nav-brand{display:flex;align-items:center;gap:.75rem}
+    .nav-brand img{width:38px;height:38px;object-fit:contain}
+    .nav-brand span{color:var(--navy);font-size:1.2rem;font-weight:700}
+    .nav-brand span em{color:var(--teal);font-style:normal}
+    .nav-back{color:var(--navy);text-decoration:none;font-size:.875rem;font-weight:600}
+    .nav-back:hover{color:var(--teal)}
+    .hero-pilar{margin-top:64px;background:linear-gradient(135deg,#E6FFFA 0%,#EBF8FF 100%);padding:5rem 5vw}
+    .hero-pilar-inner{max-width:900px;margin:0 auto;text-align:center}
+    .pilar-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(14,138,138,.15);border:1px solid var(--teal);color:var(--teal);padding:.35rem .9rem;border-radius:999px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1.5rem}
+    h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--navy);line-height:1.15;margin-bottom:1rem}
+    h1 span{color:var(--teal)}
+    .hero-sub{color:var(--gray-600);font-size:1.1rem;line-height:1.7;max-width:650px;margin:0 auto 2.5rem}
+    .dashboard-mock{max-width:1000px;margin:3rem auto;background:var(--navy);border-radius:20px;padding:2rem;box-shadow:0 12px 60px rgba(13,43,78,.25)}
+    .mock-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+    .mock-title{color:var(--teal-light);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+    .mock-badge{background:rgba(14,138,138,.3);color:var(--teal-light);padding:.2rem .6rem;border-radius:4px;font-size:.72rem;font-weight:700}
+    .patient-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem}
+    .patient-table th{color:rgba(255,255,255,.4);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;padding:.5rem .75rem;text-align:left;border-bottom:1px solid rgba(255,255,255,.08)}
+    .patient-table td{color:rgba(255,255,255,.85);font-size:.85rem;padding:.65rem .75rem;border-bottom:1px solid rgba(255,255,255,.05)}
+    .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:.4rem}
+    .dot-red{background:#E53E3E}.dot-yellow{background:#ECC94B}.dot-green{background:#38A169}
+    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;max-width:1100px;margin:4rem auto;padding:0 5vw}
+    .feat-card{background:var(--white);border-radius:16px;padding:2rem;border:1px solid var(--gray-100);box-shadow:0 2px 12px rgba(13,43,78,.06)}
+    .feat-icon{font-size:2rem;margin-bottom:1rem}
+    .feat-card h3{color:var(--navy);font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+    .feat-card p{color:var(--gray-600);font-size:.9rem;line-height:1.6}
+    .cta-section{text-align:center;padding:4rem 5vw;background:var(--navy)}
+    .cta-section h2{color:#fff;font-size:1.8rem;font-weight:800;margin-bottom:.75rem}
+    .cta-section p{color:rgba(255,255,255,.75);margin-bottom:1.5rem}
+    .btn-teal{background:var(--teal);color:#fff;padding:.85rem 2rem;border-radius:8px;font-weight:700;text-decoration:none;display:inline-block}
+    footer{background:var(--gray-800);padding:1.5rem 5vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    footer span{color:rgba(255,255,255,.4);font-size:.8rem}
+    footer a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.8rem}
+    footer a:hover{color:#fff}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <img src="assets/logo.png" alt="MxDiabetes">
+    <span>Mx<em>Diabetes</em></span>
+  </div>
+  <a href="index.html" class="nav-back">← Volver al inicio</a>
+</nav>
+
+<div class="hero-pilar">
+  <div class="hero-pilar-inner">
+    <div class="pilar-badge">👨‍⚕️ Pilar 2 — Médico</div>
+    <h1>Su panel clínico.<br><span>Sus pacientes, bajo control.</span></h1>
+    <p class="hero-sub">MxDiabetes le da al médico una visión en tiempo real del estado glucémico de toda su población de pacientes con DM2 — alertas, adherencia y guías terapéuticas actualizadas en un solo dashboard.</p>
+  </div>
+</div>
+
+<div style="max-width:1000px;margin:0 auto;padding:0 5vw">
+  <div class="dashboard-mock">
+    <div class="mock-header">
+      <div class="mock-title">📋 Panel del Dr. García Mendoza — 47 pacientes activos</div>
+      <div class="mock-badge">Actualizado hace 3 min</div>
+    </div>
+    <table class="patient-table">
+      <thead>
+        <tr>
+          <th>Paciente</th>
+          <th>Glucosa ayuno</th>
+          <th>HbA1c</th>
+          <th>Última consulta</th>
+          <th>Adherencia</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>María R. (63)</td>
+          <td>198 mg/dL</td>
+          <td>9.2%</td>
+          <td>Hace 45 días</td>
+          <td>41%</td>
+          <td><span class="status-dot dot-red"></span>Alerta</td>
+        </tr>
+        <tr>
+          <td>Jorge L. (58)</td>
+          <td>142 mg/dL</td>
+          <td>7.8%</td>
+          <td>Hace 12 días</td>
+          <td>78%</td>
+          <td><span class="status-dot dot-yellow"></span>Revisar</td>
+        </tr>
+        <tr>
+          <td>Ana M. (49)</td>
+          <td>108 mg/dL</td>
+          <td>6.9%</td>
+          <td>Hace 7 días</td>
+          <td>95%</td>
+          <td><span class="status-dot dot-green"></span>Controlado</td>
+        </tr>
+        <tr>
+          <td>Carlos V. (71)</td>
+          <td>167 mg/dL</td>
+          <td>8.4%</td>
+          <td>Hace 30 días</td>
+          <td>52%</td>
+          <td><span class="status-dot dot-yellow"></span>Revisar</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="color:rgba(255,255,255,.4);font-size:.75rem">⚠️ 6 pacientes requieren atención inmediata · 📞 Teleconsulta disponible · 📄 Guía ADA 2026 actualizada</div>
+  </div>
+</div>
+
+<div class="feature-grid">
+  <div class="feat-card">
+    <div class="feat-icon">📊</div>
+    <h3>Panel de seguimiento poblacional</h3>
+    <p>Visualice el estado glucémico de toda su lista de pacientes. Filtre por HbA1c, adherencia, días sin consulta o medicamento activo.</p>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">🔔</div>
+    <h3>Alertas de descontrol</h3>
+    <p>Reciba notificación inmediata cuando un paciente presente lecturas de glucosa en ayuno >180 mg/dL por 3 días consecutivos o adherencia <50%.</p>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">📚</div>
+    <h3>Guías terapéuticas ADA/ALAD</h3>
+    <p>Acceso a guías clínicas actualizadas integradas al perfil del paciente. El sistema sugiere ajustes de esquema basados en el historial de glucosa.</p>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">💻</div>
+    <h3>Teleconsulta integrada</h3>
+    <p>Atienda pacientes de bajo riesgo sin desplazamiento. La teleconsulta registra automáticamente la nota clínica y actualiza el perfil del paciente.</p>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">💊</div>
+    <h3>Registro de adherencia farmacológica</h3>
+    <p>Vea en tiempo real si su paciente está tomando metformina, Jardiance u Ozempic — y reciba alertas cuando la adherencia baje del umbral que usted fije.</p>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">📤</div>
+    <h3>Integración con IMSS y H. Ángeles</h3>
+    <p>MxDiabetes está diseñado para integrarse con los sistemas de expediente clínico de IMSS e ISSSTE vía API — sin duplicar información.</p>
+  </div>
+</div>
+
+<div class="cta-section">
+  <h2>Piloto con médicos seleccionados</h2>
+  <p>Estamos invitando a endocrinólogos y médicos generales del IMSS, ISSSTE y Hospital Ángeles a participar en el piloto Q1 2027.</p>
+  <a href="mailto:medicos@mxdiabetes.info" class="btn-teal">Solicitar acceso al piloto</a>
+</div>
+
+<footer>
+  <span>MxDiabetes · mxdiabetes.info · Una iniciativa de EurekaMD · 2026</span>
+  <a href="index.html">← Volver al inicio</a>
+</footer>
+
+</body>
+</html>
