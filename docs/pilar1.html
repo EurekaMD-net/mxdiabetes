@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MxDiabetes — Pilar 1: Paciente</title>
+  <style>
+    :root { --navy:#0D2B4E; --teal:#0E8A8A; --teal-light:#1BBFBF; --white:#FFFFFF; --gray-50:#F8FAFB; --gray-100:#EEF2F5; --gray-600:#4A5568; --gray-800:#1A202C; --accent:#E53E3E; --font:'Segoe UI',system-ui,sans-serif; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font);color:var(--gray-800);background:var(--white)}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+    .nav-brand{display:flex;align-items:center;gap:.75rem}
+    .nav-brand img{width:38px;height:38px;object-fit:contain}
+    .nav-brand span{color:var(--navy);font-size:1.2rem;font-weight:700}
+    .nav-brand span em{color:var(--teal);font-style:normal}
+    .nav-back{color:var(--navy);text-decoration:none;font-size:.875rem;font-weight:600;display:flex;align-items:center;gap:.4rem}
+    .nav-back:hover{color:var(--teal)}
+    .hero-pilar{margin-top:64px;background:linear-gradient(135deg,#EBF8FF 0%,#E6FFFA 100%);padding:5rem 5vw}
+    .hero-pilar-inner{max-width:900px;margin:0 auto;text-align:center}
+    .pilar-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(14,138,138,.15);border:1px solid var(--teal);color:var(--teal);padding:.35rem .9rem;border-radius:999px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1.5rem}
+    h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--navy);line-height:1.15;margin-bottom:1rem}
+    h1 span{color:var(--teal)}
+    .hero-sub{color:var(--gray-600);font-size:1.1rem;line-height:1.7;max-width:650px;margin:0 auto 2.5rem}
+    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;max-width:1100px;margin:4rem auto}
+    .feat-card{background:var(--white);border-radius:16px;padding:2rem;border:1px solid var(--gray-100);box-shadow:0 2px 12px rgba(13,43,78,.06);text-align:left}
+    .feat-icon{font-size:2rem;margin-bottom:1rem}
+    .feat-card h3{color:var(--navy);font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+    .feat-card p{color:var(--gray-600);font-size:.9rem;line-height:1.6}
+    .screen-mock{max-width:800px;margin:3rem auto;background:var(--navy);border-radius:20px;padding:2rem;box-shadow:0 12px 60px rgba(13,43,78,.25)}
+    .mock-bar{display:flex;gap:.5rem;margin-bottom:1.5rem}
+    .mock-dot{width:12px;height:12px;border-radius:50%}
+    .mock-dot:nth-child(1){background:#FF5F57}
+    .mock-dot:nth-child(2){background:#FFBD2E}
+    .mock-dot:nth-child(3){background:#28CA41}
+    .mock-title{color:var(--teal-light);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.5rem}
+    .mock-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+    .mock-stat{background:rgba(255,255,255,.07);border-radius:10px;padding:1rem;text-align:center}
+    .mock-stat-num{color:var(--teal-light);font-size:1.8rem;font-weight:800}
+    .mock-stat-label{color:rgba(255,255,255,.6);font-size:.75rem;margin-top:.2rem}
+    .mock-chart{background:rgba(255,255,255,.05);border-radius:10px;padding:1.25rem;margin-bottom:1rem}
+    .mock-chart-label{color:rgba(255,255,255,.5);font-size:.75rem;margin-bottom:.75rem}
+    .mock-bars{display:flex;align-items:flex-end;gap:.5rem;height:60px}
+    .mock-bar-item{flex:1;border-radius:4px 4px 0 0;background:var(--teal);opacity:.6}
+    .mock-bar-item.hi{opacity:1;background:var(--teal-light)}
+    .cta-section{text-align:center;padding:4rem 5vw;background:var(--teal)}
+    .cta-section h2{color:#fff;font-size:1.8rem;font-weight:800;margin-bottom:.75rem}
+    .cta-section p{color:rgba(255,255,255,.85);margin-bottom:1.5rem}
+    .btn-white{background:#fff;color:var(--teal);padding:.85rem 2rem;border-radius:8px;font-weight:700;text-decoration:none;display:inline-block}
+    .btn-white:hover{opacity:.9}
+    footer{background:var(--gray-800);padding:1.5rem 5vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    footer span{color:rgba(255,255,255,.4);font-size:.8rem}
+    footer a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.8rem}
+    footer a:hover{color:#fff}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <img src="assets/logo.png" alt="MxDiabetes">
+    <span>Mx<em>Diabetes</em></span>
+  </div>
+  <a href="index.html" class="nav-back">← Volver al inicio</a>
+</nav>
+
+<div class="hero-pilar" style="margin-top:64px">
+  <div class="hero-pilar-inner">
+    <div class="pilar-badge">🩺 Pilar 1 — Paciente</div>
+    <h1>Tu salud en tus manos.<br><span>Control real de la diabetes.</span></h1>
+    <p class="hero-sub">MxDiabetes acompaña a cada paciente con DM2 con herramientas digitales validadas clínicamente — glucosa, medicamentos, educación y su médico, todo en un solo lugar.</p>
+  </div>
+</div>
+
+<div style="max-width:900px;margin:0 auto;padding:0 5vw">
+  <div class="screen-mock">
+    <div class="mock-bar">
+      <div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+    </div>
+    <div class="mock-title">📊 Mi glucosa — últimos 7 días</div>
+    <div class="mock-stat-row">
+      <div class="mock-stat"><div class="mock-stat-num">118</div><div class="mock-stat-label">Promedio mg/dL</div></div>
+      <div class="mock-stat"><div class="mock-stat-num">7.2%</div><div class="mock-stat-label">HbA1c estimada</div></div>
+      <div class="mock-stat"><div class="mock-stat-num">6/7</div><div class="mock-stat-label">Días en meta</div></div>
+    </div>
+    <div class="mock-chart">
+      <div class="mock-chart-label">Lecturas en ayuno (mg/dL) — meta: 70-130</div>
+      <div class="mock-bars">
+        <div class="mock-bar-item" style="height:60%"></div>
+        <div class="mock-bar-item hi" style="height:85%"></div>
+        <div class="mock-bar-item" style="height:55%"></div>
+        <div class="mock-bar-item" style="height:70%"></div>
+        <div class="mock-bar-item hi" style="height:90%"></div>
+        <div class="mock-bar-item" style="height:65%"></div>
+        <div class="mock-bar-item" style="height:58%"></div>
+      </div>
+    </div>
+    <div style="color:rgba(255,255,255,.5);font-size:.8rem">✅ Próxima cita: Dr. García · Lunes 15 sep · 10:00am</div>
+  </div>
+</div>
+
+<div class="feature-grid" style="padding:0 5vw">
+  <div class="feat-card">
+    <div class="feat-icon">📈</div>
+    <h3>Seguimiento de glucosa</h3>
+    <p>Registra tus lecturas diarias y visualiza tendencias. Recibe alertas cuando tu glucosa en ayuno supere el rango meta definido con tu médico.</p>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">💊</div>
+    <h3>Recordatorio de medicamentos</h3>
+    <p>Nunca olvides una dosis. MxDiabetes te avisa por voz o notificación, y registra tu adherencia para compartirla con tu médico en la próxima consulta.</p>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">🎓</div>
+    <h3>Educación validada clínicamente</h3>
+    <p>Módulos de educación diabetológica basados en guías ADA/ALAD. Aprende sobre alimentación, ejercicio y manejo del estrés glucémico — en español mexicano.</p>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">🎙️</div>
+    <h3>Agente de voz 24/7</h3>
+    <p>¿Tienes una duda a las 11pm? El agente PipeSong responde preguntas sobre glucosa, medicamentos y síntomas — sin tiempo de espera, sin costo adicional.</p>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">👥</div>
+    <h3>Comunidad de apoyo</h3>
+    <p>Conecta con otros pacientes que viven con DM2 en México. Comparte recetas, rutinas y motivación — moderado por especialistas.</p>
+  </div>
+  <div class="feat-card">
+    <div class="feat-icon">📋</div>
+    <h3>Historial clínico portable</h3>
+    <p>Tu HbA1c, medicamentos y lecturas siempre disponibles para tu médico — en IMSS, ISSSTE o privado. Sin papeles, sin repetir tu historia cada cita.</p>
+  </div>
+</div>
+
+<div class="cta-section">
+  <h2>¿Quieres acceso anticipado?</h2>
+  <p>MxDiabetes se lanzará en 2026. Regístrate para ser parte del piloto con el IMSS y Hospital Ángeles.</p>
+  <a href="mailto:hola@mxdiabetes.info" class="btn-white">Quiero acceso anticipado</a>
+</div>
+
+<footer>
+  <span>MxDiabetes · mxdiabetes.info · Una iniciativa de EurekaMD · 2026</span>
+  <a href="index.html">← Volver al inicio</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MxDiabetes — Plataforma Nacional de Salud Diabética</title>
+  <style>
+    /* ── BRAND TOKENS ────────────────────────────────── */
+    :root {
+      --navy:   #0D2B4E;
+      --teal:   #0E8A8A;
+      --teal-light: #1BBFBF;
+      --white:  #FFFFFF;
+      --gray-50: #F8FAFB;
+      --gray-100: #EEF2F5;
+      --gray-600: #4A5568;
+      --gray-800: #1A202C;
+      --accent:  #E53E3E;
+      --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    /* ── RESET ────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--gray-800); background: var(--white); }
+    img { max-width: 100%; display: block; }
+
+    /* ── NAV ──────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: #ffffff;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 64px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.75rem; }
+    .nav-brand img { width: 38px; height: 38px; object-fit: contain; }
+    .nav-brand span {
+      color: var(--navy); font-size: 1.2rem; font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .nav-brand span em { color: var(--teal); font-style: normal; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--navy); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-cta {
+      background: var(--teal); color: var(--white);
+      padding: 0.5rem 1.2rem; border-radius: 6px;
+      font-size: 0.875rem; font-weight: 600;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--navy); }
+
+    /* ── HERO ─────────────────────────────────────────── */
+    .hero {
+      margin-top: 64px;
+      position: relative; min-height: calc(100vh - 64px);
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('assets/hero.jpg');
+      background-size: cover; background-position: center;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(105deg, rgba(13,43,78,0.92) 45%, rgba(13,43,78,0.55) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 680px; padding: 4rem 2rem 4rem 5vw;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(14,138,138,0.25); border: 1px solid var(--teal);
+      color: var(--teal-light); padding: 0.35rem 0.9rem;
+      border-radius: 999px; font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      color: var(--white); font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800; line-height: 1.15; margin-bottom: 1.25rem;
+    }
+    .hero h1 span { color: var(--teal-light); }
+    .hero p {
+      color: rgba(255,255,255,0.85); font-size: 1.15rem;
+      line-height: 1.7; margin-bottom: 2rem; max-width: 560px;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--teal); color: var(--white);
+      padding: 0.85rem 2rem; border-radius: 8px;
+      font-size: 1rem; font-weight: 700; text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,0.5); color: var(--white);
+      padding: 0.85rem 2rem; border-radius: 8px;
+      font-size: 1rem; font-weight: 600; text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    /* ── STATS STRIP ──────────────────────────────────── */
+    .stats-strip {
+      background: var(--navy);
+      padding: 2.5rem 5vw;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem; max-width: 1100px; margin: 0 auto; text-align: center;
+    }
+    .stat-item {}
+    .stat-num {
+      font-size: 2.5rem; font-weight: 800; color: var(--teal-light);
+      line-height: 1;
+    }
+    .stat-label {
+      color: rgba(255,255,255,0.75); font-size: 0.875rem; margin-top: 0.4rem;
+      line-height: 1.4;
+    }
+    .stat-source {
+      color: rgba(255,255,255,0.35); font-size: 0.7rem; margin-top: 0.25rem;
+    }
+
+    /* ── SECTION GENERIC ──────────────────────────────── */
+    section { padding: 5rem 5vw; }
+    .section-label {
+      text-transform: uppercase; letter-spacing: 0.1em;
+      font-size: 0.78rem; font-weight: 700;
+      color: var(--teal); margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800;
+      color: var(--navy); line-height: 1.2; margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--gray-600); font-size: 1.05rem; line-height: 1.7;
+      max-width: 600px;
+    }
+    .centered { text-align: center; }
+    .centered .section-sub { margin: 0 auto 3rem; }
+
+    /* ── PILARES ──────────────────────────────────────── */
+    .pilares-section { background: var(--gray-50); }
+    .pilares-img-wrap {
+      max-width: 1100px; margin: 0 auto 3.5rem;
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 8px 40px rgba(13,43,78,0.12);
+    }
+    .pilares-img-wrap img { width: 100%; }
+    .pilares-cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+    }
+    .pilar-card {
+      background: var(--white); border-radius: 12px;
+      padding: 2rem; border: 1px solid var(--gray-100);
+      box-shadow: 0 2px 12px rgba(13,43,78,0.06);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .pilar-card:hover { box-shadow: 0 8px 30px rgba(13,43,78,0.12); transform: translateY(-3px); }
+    .pilar-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin-bottom: 1.25rem;
+    }
+    .icon-patient { background: #EBF8FF; }
+    .icon-doctor  { background: #E6FFFA; }
+    .icon-pharma  { background: #EBF4FF; }
+    .pilar-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 0.75rem; }
+    .pilar-card p  { color: var(--gray-600); font-size: 0.95rem; line-height: 1.6; }
+    .pilar-features { list-style: none; margin-top: 1rem; }
+    .pilar-features li {
+      color: var(--gray-600); font-size: 0.875rem; padding: 0.3rem 0;
+      padding-left: 1.2rem; position: relative;
+    }
+    .pilar-features li::before {
+      content: '✓'; position: absolute; left: 0;
+      color: var(--teal); font-weight: 700;
+    }
+
+    /* ── DATOS SECTION ────────────────────────────────── */
+    .datos-section {
+      position: relative; overflow: hidden;
+      background: var(--navy); padding: 5rem 5vw;
+    }
+    .datos-bg {
+      position: absolute; inset: 0;
+      background-image: url('assets/datos-bg.png');
+      background-size: cover; background-position: center;
+      opacity: 0.18;
+    }
+    .datos-content {
+      position: relative; z-index: 2;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .datos-content .section-title { color: var(--white); }
+    .datos-content .section-sub { color: rgba(255,255,255,0.75); }
+    .datos-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .dato-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px; padding: 1.75rem;
+      backdrop-filter: blur(4px);
+    }
+    .dato-num { font-size: 2.2rem; font-weight: 800; color: var(--teal-light); }
+    .dato-label { color: rgba(255,255,255,0.85); font-size: 0.9rem; margin-top: 0.3rem; line-height: 1.4; }
+    .dato-source { color: rgba(255,255,255,0.35); font-size: 0.68rem; margin-top: 0.5rem; }
+    .dato-bar {
+      height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-top: 1rem;
+    }
+    .dato-bar-fill { height: 100%; border-radius: 2px; background: var(--teal); }
+
+    /* ── PHARMA CTA ───────────────────────────────────── */
+    .pharma-section { background: var(--gray-50); }
+    .pharma-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .pharma-labs {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;
+    }
+    .lab-chip {
+      background: var(--white); border: 1px solid var(--gray-100);
+      border-radius: 8px; padding: 0.6rem 0.4rem;
+      text-align: center; font-size: 0.78rem; font-weight: 600;
+      color: var(--navy); box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .lab-chip.tier1 { border-left: 3px solid var(--teal); }
+    .lab-chip.tier2 { border-left: 3px solid rgba(14,138,138,0.4); }
+
+    /* ── VOICE SECTION ────────────────────────────────── */
+    .voice-section { background: var(--white); }
+    .voice-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .voice-demo {
+      background: var(--navy); border-radius: 16px; padding: 2rem;
+      box-shadow: 0 8px 40px rgba(13,43,78,0.2);
+    }
+    .voice-demo-title { color: var(--teal-light); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem; }
+    .voice-bubble {
+      border-radius: 10px; padding: 0.75rem 1rem;
+      font-size: 0.9rem; margin-bottom: 0.75rem; line-height: 1.5;
+    }
+    .bubble-agent { background: rgba(14,138,138,0.25); color: var(--teal-light); }
+    .bubble-user  { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); text-align: right; }
+    .voice-indicator {
+      display: flex; align-items: center; gap: 0.5rem; margin-top: 1.25rem;
+    }
+    .voice-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
+    .voice-dot.pulse { animation: pulse 1.4s ease-in-out infinite; }
+    .voice-dot:nth-child(2) { animation-delay: 0.2s; }
+    .voice-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes pulse { 0%,100%{opacity:0.3;transform:scale(0.8)} 50%{opacity:1;transform:scale(1.2)} }
+    .voice-label { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
+
+    /* ── IMSS STRIP ───────────────────────────────────── */
+    .imss-strip {
+      background: linear-gradient(135deg, var(--navy) 0%, #0a3d62 100%);
+      padding: 3.5rem 5vw; text-align: center;
+    }
+    .imss-strip h2 { color: var(--white); font-size: 1.6rem; font-weight: 800; margin-bottom: 0.75rem; }
+    .imss-strip p { color: rgba(255,255,255,0.75); font-size: 1rem; max-width: 600px; margin: 0 auto 2rem; line-height: 1.6; }
+    .imss-logos {
+      display: flex; justify-content: center; align-items: center;
+      gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;
+    }
+    .inst-badge {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px; padding: 0.6rem 1.2rem;
+      color: var(--white); font-size: 0.85rem; font-weight: 600;
+    }
+
+    /* ── CONTACT / CTA FOOTER ─────────────────────────── */
+    .cta-footer {
+      background: var(--teal); padding: 4rem 5vw; text-align: center;
+    }
+    .cta-footer h2 { color: var(--white); font-size: 2rem; font-weight: 800; margin-bottom: 0.75rem; }
+    .cta-footer p { color: rgba(255,255,255,0.85); font-size: 1.05rem; margin-bottom: 2rem; }
+    .btn-white {
+      background: var(--white); color: var(--teal);
+      padding: 0.9rem 2.5rem; border-radius: 8px;
+      font-size: 1rem; font-weight: 700; text-decoration: none;
+      display: inline-block; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    footer {
+      background: var(--gray-800); padding: 2rem 5vw;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    footer .foot-brand { display: flex; align-items: center; gap: 0.6rem; }
+    footer .foot-brand img { width: 28px; opacity: 0.8; }
+    footer .foot-brand span { color: rgba(255,255,255,0.6); font-size: 0.85rem; }
+    footer p { color: rgba(255,255,255,0.35); font-size: 0.78rem; }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-content { padding: 3rem 1.5rem; }
+      .pharma-inner, .voice-inner { grid-template-columns: 1fr; gap: 2rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-brand">
+    <img src="assets/logo.png" alt="MxDiabetes logo">
+    <span>Mx<em>Diabetes</em></span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#pilares">Plataforma</a></li>
+    <li><a href="#datos">Epidemiología</a></li>
+    <li><a href="#pharma">Laboratorios</a></li>
+    <li><a href="#voz">Agente de Voz</a></li>
+  </ul>
+  <a href="#contacto" class="nav-cta">Solicitar información</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🇲🇽 Plataforma Nacional · Iniciativa EurekaMD</div>
+    <h1>La plataforma que México necesita para <span>controlar la diabetes</span></h1>
+    <p>1 de cada 3 adultos mexicanos tiene diabetes o está en ruta hacia ella. MxDiabetes articula pacientes, médicos y laboratorios en un hub digital nacional respaldado por evidencia clínica.</p>
+    <div class="hero-actions">
+      <a href="#pilares" class="btn-primary">Conocer la plataforma</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS STRIP ── -->
+<div class="stats-strip">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num">~10M</div>
+      <div class="stat-label">adultos con diabetes diagnosticada</div>
+      <div class="stat-source">ENSANUT 2022 · Basto-Abreu et al.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">~4.4M</div>
+      <div class="stat-label">con diabetes <em style="color:var(--accent);font-style:normal">sin diagnóstico</em></div>
+      <div class="stat-source">ENSANUT 2022 · 5.8% prevalencia</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">17.3M</div>
+      <div class="stat-label">en prediabetes — sin intervención</div>
+      <div class="stat-source">ENSANUT 2022 · 22.1% adultos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">33%</div>
+      <div class="stat-label">de diagnosticados tiene control glucémico</div>
+      <div class="stat-source">ENSANUT 2021-2024 · Reyes-García et al.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PILARES ── -->
+<section class="pilares-section" id="pilares">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="centered">
+      <div class="section-label">La plataforma</div>
+      <h2 class="section-title">Tres audiencias. Un ecosistema.</h2>
+      <p class="section-sub">MxDiabetes conecta a los tres actores clave del manejo de la diabetes en México bajo una infraestructura digital común.</p>
+    </div>
+    <div class="pilares-img-wrap">
+      <img src="assets/pilares.png" alt="Los tres pilares de MxDiabetes: Paciente, Médico, Patrocinador">
+    </div>
+    <div class="pilares-cards">
+      <a href="pilar1.html" class="pilar-card" style="text-decoration:none;color:inherit;display:block">
+        <div class="pilar-icon icon-patient">🩺</div>
+        <h3>Paciente</h3>
+        <p>Acompañamiento digital para el manejo cotidiano de la glucosa, educación y acceso a su equipo médico.</p>
+        <ul class="pilar-features">
+          <li>Seguimiento de glucosa y HbA1c</li>
+          <li>Educación validada clínicamente</li>
+          <li>Agente de voz para consultas rápidas</li>
+          <li>Recordatorio de medicamentos</li>
+          <li>Comunidad de apoyo entre pares</li>
+        </ul>
+        <div style="margin-top:1.25rem;color:var(--teal);font-size:.875rem;font-weight:600">Ver pilar Paciente →</div>
+      </a>
+      <a href="pilar2.html" class="pilar-card" style="text-decoration:none;color:inherit;display:block">
+        <div class="pilar-icon icon-doctor">👨‍⚕️</div>
+        <h3>Médico</h3>
+        <p>Herramientas clínicas para el seguimiento de pacientes con DM2 y acceso a guías de práctica actualizada.</p>
+        <ul class="pilar-features">
+          <li>Panel de seguimiento poblacional</li>
+          <li>Alertas de descontrol glucémico</li>
+          <li>Guías terapéuticas ADA / ALAD</li>
+          <li>Teleconsulta integrada</li>
+          <li>Registro de adherencia farmacológica</li>
+        </ul>
+        <div style="margin-top:1.25rem;color:var(--teal);font-size:.875rem;font-weight:600">Ver pilar Médico →</div>
+      </a>
+      <a href="pilar3.html" class="pilar-card" style="text-decoration:none;color:inherit;display:block">
+        <div class="pilar-icon icon-pharma">🔬</div>
+        <h3>Patrocinador</h3>
+        <p>Canal directo y medible hacia pacientes activos y médicos prescriptores, con exclusividad de categoría.</p>
+        <ul class="pilar-features">
+          <li>Audiencia verificada DM2 activa</li>
+          <li>Exclusividad de categoría terapéutica</li>
+          <li>Métricas de impacto en adherencia</li>
+          <li>Contenido educativo co-branded</li>
+          <li>Acceso a datos epidemiológicos en tiempo real</li>
+        </ul>
+        <div style="margin-top:1.25rem;color:var(--teal);font-size:.875rem;font-weight:600">Ver pilar Patrocinador →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── DATOS ── -->
+<section class="datos-section" id="datos">
+  <div class="datos-bg"></div>
+  <div class="datos-content">
+    <div class="section-label" style="color:var(--teal-light)">La magnitud del problema</div>
+    <h2 class="section-title">México, país con diabetes</h2>
+    <p class="section-sub">Los datos son contundentes. La oportunidad de impacto — para laboratorios, instituciones y plataformas digitales — es enorme.</p>
+    <div class="datos-grid">
+      <div class="dato-card">
+        <div class="dato-num">26M</div>
+        <div class="dato-label">adultos en riesgo o con diabetes — 1 de cada 3</div>
+        <div class="dato-source">ENSANUT 2022</div>
+        <div class="dato-bar"><div class="dato-bar-fill" style="width:33%"></div></div>
+      </div>
+      <div class="dato-card">
+        <div class="dato-num">67%</div>
+        <div class="dato-label">de diagnosticados <strong style="color:var(--accent)">sin control glucémico</strong></div>
+        <div class="dato-source">ENSANUT 2021-2024 · HbA1c ≥7%</div>
+        <div class="dato-bar"><div class="dato-bar-fill" style="width:67%;background:var(--accent)"></div></div>
+      </div>
+      <div class="dato-card">
+        <div class="dato-num">8.1%</div>
+        <div class="dato-label">diabetes no diagnosticada en la región Centro — la más alta</div>
+        <div class="dato-source">ENSANUT 2021-2024 · Reyes-García et al.</div>
+        <div class="dato-bar"><div class="dato-bar-fill" style="width:8.1%"></div></div>
+      </div>
+      <div class="dato-card">
+        <div class="dato-num">25%</div>
+        <div class="dato-label">de pacientes con prediabetes desarrollan DM2 en 3-5 años sin intervención</div>
+        <div class="dato-source">ENSANUT 2022 · Basto-Abreu et al.</div>
+        <div class="dato-bar"><div class="dato-bar-fill" style="width:25%"></div></div>
+      </div>
+    </div>
+    <p style="color:rgba(255,255,255,0.35);font-size:0.72rem;margin-top:2rem">
+      Fuentes: Basto-Abreu et al., Salud Pública de México 2023;65(supl 1):S163-S168 (ENSANUT 2022) · 
+      Reyes-García et al., Salud Pública de México 2025;67(6):622-632 (ENSANUT 2021-2024, PMID:41698129)
+    </p>
+  </div>
+</section>
+
+<!-- ── PHARMA ── -->
+<section class="pharma-section" id="pharma">
+  <div class="pharma-inner">
+    <div>
+      <div class="section-label">Para laboratorios farmacéuticos</div>
+      <h2 class="section-title">El canal que faltaba en México</h2>
+      <p class="section-sub" style="margin-bottom:1.5rem">MxDiabetes ofrece al patrocinador ancla exclusividad de categoría terapéutica — acceso directo a una audiencia verificada de pacientes activos con DM2, sin ruido competitivo.</p>
+      <p class="section-sub" style="margin-bottom:2rem">El modelo de patrocinio incluye contenido educativo co-branded, presencia en el agente de voz, y métricas de impacto en adherencia farmacológica.</p>
+      <a href="#contacto" class="btn-primary" style="display:inline-block">Solicitar propuesta comercial</a>
+    </div>
+    <div>
+      <p style="font-size:0.8rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem">Laboratorios invitados al ecosistema</p>
+      <div class="pharma-labs">
+        <div class="lab-chip tier1">Novo Nordisk</div>
+        <div class="lab-chip tier1">Eli Lilly</div>
+        <div class="lab-chip tier1">Boehringer<br>Ingelheim</div>
+        <div class="lab-chip tier1">AstraZeneca</div>
+        <div class="lab-chip tier1">Sanofi</div>
+        <div class="lab-chip tier2">MSD / Merck</div>
+        <div class="lab-chip tier2">Novartis</div>
+        <div class="lab-chip tier2">Takeda</div>
+        <div class="lab-chip tier2">Janssen</div>
+        <div class="lab-chip tier2">Liomont</div>
+        <div class="lab-chip tier2">Sanfer</div>
+        <div class="lab-chip tier2">Chinoin</div>
+      </div>
+      <p style="font-size:0.7rem;color:var(--gray-600);margin-top:0.75rem">
+        <span style="color:var(--teal);font-weight:700">■</span> Tier 1 — prioridad alta &nbsp;
+        <span style="color:rgba(14,138,138,0.5);font-weight:700">■</span> Tier 2 — relevantes
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── VOICE ── -->
+<section class="voice-section" id="voz">
+  <div class="voice-inner">
+    <div>
+      <div class="section-label">Tecnología</div>
+      <h2 class="section-title">Agente de voz integrado — powered by PipeSong</h2>
+      <p class="section-sub" style="margin-bottom:1.5rem">El corazón tecnológico de MxDiabetes es un agente conversacional de voz capaz de responder preguntas sobre glucosa, medicamentos y citas — 24/7, sin costo adicional por consulta.</p>
+      <ul class="pilar-features" style="list-style:none;padding:0">
+        <li style="padding:0.4rem 0;padding-left:1.2rem;position:relative;color:var(--gray-600);font-size:0.95rem">
+          <span style="position:absolute;left:0;color:var(--teal);font-weight:700">✓</span>
+          Voz natural en español mexicano
+        </li>
+        <li style="padding:0.4rem 0;padding-left:1.2rem;position:relative;color:var(--gray-600);font-size:0.95rem">
+          <span style="position:absolute;left:0;color:var(--teal);font-weight:700">✓</span>
+          Self-hosted — datos del paciente nunca salen del ecosistema
+        </li>
+        <li style="padding:0.4rem 0;padding-left:1.2rem;position:relative;color:var(--gray-600);font-size:0.95rem">
+          <span style="position:absolute;left:0;color:var(--teal);font-weight:700">✓</span>
+          Integrable con IMSS / sistemas hospitalarios vía API
+        </li>
+        <li style="padding:0.4rem 0;padding-left:1.2rem;position:relative;color:var(--gray-600);font-size:0.95rem">
+          <span style="position:absolute;left:0;color:var(--teal);font-weight:700">✓</span>
+          Latencia &lt;800ms — experiencia conversacional fluida
+        </li>
+      </ul>
+    </div>
+    <div class="voice-demo">
+      <div class="voice-demo-title">💬 Demo — Agente MxDiabetes</div>
+      <div class="voice-bubble bubble-agent">
+        Hola, soy el asistente de MxDiabetes. ¿Cuál es tu lectura de glucosa en ayuno hoy?
+      </div>
+      <div class="voice-bubble bubble-user">
+        Tuve 148 mg/dL esta mañana.
+      </div>
+      <div class="voice-bubble bubble-agent">
+        Gracias. Tu lectura está por encima del rango objetivo (70-130 mg/dL en ayuno). Te recomiendo registrarla en tu perfil y comentarla con tu médico en tu próxima cita. ¿Quieres que te ayude a programar un recordatorio?
+      </div>
+      <div class="voice-indicator">
+        <div class="voice-dot pulse"></div>
+        <div class="voice-dot pulse"></div>
+        <div class="voice-dot pulse"></div>
+        <span class="voice-label">Agente activo — PipeSong Voice AI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── IMSS STRIP ── -->
+<div class="imss-strip">
+  <h2>Respaldado por las instituciones de salud de México</h2>
+  <p>MxDiabetes está diseñado para articularse con el sistema de salud existente — no para reemplazarlo.</p>
+
+  <!-- Instituciones -->
+  <p style="color:rgba(255,255,255,.45);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.25rem">Instituciones aliadas</p>
+  <div class="imss-logos" style="margin-bottom:2.5rem">
+    <!-- IMSS SVG logo -->
+    <div class="inst-logo-wrap" title="IMSS">
+      <svg width="90" height="36" viewBox="0 0 120 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="48" rx="6" fill="rgba(255,255,255,0.12)"/>
+        <text x="60" y="20" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="16" fill="#4CAF50">IMSS</text>
+        <text x="60" y="36" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">Instituto Mexicano del Seguro Social</text>
+      </svg>
+    </div>
+    <!-- ISSSTE -->
+    <div class="inst-logo-wrap" title="ISSSTE">
+      <svg width="90" height="36" viewBox="0 0 120 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="48" rx="6" fill="rgba(255,255,255,0.12)"/>
+        <text x="60" y="20" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="14" fill="#2196F3">ISSSTE</text>
+        <text x="60" y="36" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">Seguridad y Servicios Sociales</text>
+      </svg>
+    </div>
+    <!-- Grupo Ángeles -->
+    <div class="inst-logo-wrap" title="Grupo Ángeles">
+      <svg width="110" height="36" viewBox="0 0 140 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="140" height="48" rx="6" fill="rgba(255,255,255,0.12)"/>
+        <text x="70" y="20" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="13" fill="#FFD700">Grupo Ángeles</text>
+        <text x="70" y="36" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">Hospitales de Alta Especialidad</text>
+      </svg>
+    </div>
+    <!-- COFEPRIS -->
+    <div class="inst-logo-wrap" title="COFEPRIS">
+      <svg width="100" height="36" viewBox="0 0 130 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="130" height="48" rx="6" fill="rgba(255,255,255,0.12)"/>
+        <text x="65" y="20" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="13" fill="#E53E3E">COFEPRIS</text>
+        <text x="65" y="36" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">Regulación Sanitaria Federal</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Labs Tier 1 -->
+  <p style="color:rgba(255,255,255,.45);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1.25rem">Laboratorios Tier 1 — ya arriba</p>
+  <div class="imss-logos">
+    <div class="inst-logo-wrap" title="Novo Nordisk">
+      <svg width="110" height="36" viewBox="0 0 140 48" fill="none">
+        <rect width="140" height="48" rx="6" fill="rgba(255,255,255,0.10)"/>
+        <circle cx="24" cy="24" r="14" fill="#003366"/>
+        <path d="M17 24 Q24 14 31 24 Q24 34 17 24Z" fill="white"/>
+        <text x="80" y="28" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="12" fill="white">Novo Nordisk</text>
+      </svg>
+    </div>
+    <div class="inst-logo-wrap" title="Eli Lilly">
+      <svg width="90" height="36" viewBox="0 0 120 48" fill="none">
+        <rect width="120" height="48" rx="6" fill="rgba(255,255,255,0.10)"/>
+        <text x="60" y="20" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="13" fill="#CC0000">Lilly</text>
+        <text x="60" y="36" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="rgba(255,255,255,0.6)">Eli Lilly and Company</text>
+      </svg>
+    </div>
+    <div class="inst-logo-wrap" title="Boehringer Ingelheim">
+      <svg width="120" height="36" viewBox="0 0 150 48" fill="none">
+        <rect width="150" height="48" rx="6" fill="rgba(255,255,255,0.10)"/>
+        <text x="75" y="20" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="11" fill="#00A0B0">Boehringer</text>
+        <text x="75" y="35" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="11" fill="#00A0B0">Ingelheim</text>
+      </svg>
+    </div>
+    <div class="inst-logo-wrap" title="AstraZeneca">
+      <svg width="110" height="36" viewBox="0 0 140 48" fill="none">
+        <rect width="140" height="48" rx="6" fill="rgba(255,255,255,0.10)"/>
+        <text x="70" y="28" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="13" fill="#830051">AstraZeneca</text>
+      </svg>
+    </div>
+    <div class="inst-logo-wrap" title="Sanofi">
+      <svg width="90" height="36" viewBox="0 0 120 48" fill="none">
+        <rect width="120" height="48" rx="6" fill="rgba(255,255,255,0.10)"/>
+        <text x="60" y="28" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="16" fill="#7AC4E2">Sanofi</text>
+      </svg>
+    </div>
+  </div>
+</div>
+<style>
+  .inst-logo-wrap { opacity: 0.85; transition: opacity 0.2s; }
+  .inst-logo-wrap:hover { opacity: 1; }
+  .imss-logos { flex-wrap: wrap; gap: 1rem; }
+</style>
+
+<!-- ── CTA FOOTER ── -->
+<div class="cta-footer" id="contacto">
+  <h2>¿Listo para ser parte de MxDiabetes?</h2>
+  <p>Si eres un laboratorio farmacéutico, institución de salud, o inversionista interesado en la plataforma nacional de diabetes, escríbenos.</p>
+  <a href="mailto:hola@mxdiabetes.info" class="btn-white">Contactar al equipo</a>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="foot-brand">
+    <img src="assets/logo.png" alt="logo">
+    <span>MxDiabetes · mxdiabetes.info</span>
+  </div>
+  <p>Una iniciativa de <strong style="color:rgba(255,255,255,0.5)">EurekaMD</strong> · 2026</p>
+  <p style="color:rgba(255,255,255,0.2);font-size:0.7rem">Demo institucional — no constituye oferta pública de servicios médicos</p>
+</footer>
+
+</body>
+</html>
